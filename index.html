@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>CS3219: Assignment 4</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://caldwell.github.io/renderjson/renderjson.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+    	// extend getUnixTime function to Date object
+    	Date.prototype.getUnixTime = function() { return this.getTime()/1000|0 };
+
+        $(document).ready(function(){
+        	// IMPORTANT: Github API limit access for unauthenticated user to 60 requests/hour. Append your own access token behind to url to remove the limit.
+        	var code_frequency_url = "https://api.github.com/repos/tungnk1993/scrapy/stats/code_frequency";
+
+        	// load data from the Github API and generate chart
+        	d3.json(code_frequency_url, function(json){
+
+    			// begin filter data from 
+    			var start_date = new Date(2016, 0, 1);
+    			var end_date = new Date(2016, 5, 30);
+
+    			json = fetch_code_frequency_between_dates(json, start_date, end_date);
+    			json = group_code_frequency_by_month(json);
+
+    			// display raw json retrieved for debugging purpose
+    			$('#d3-part-two-json').append(renderjson(json, null, '\t'));
+
+    			// generate chart
+        		pyramid_chart(json);
+        	});
+        });
+
+        // code frequency json, start date in unix time (inclusive), end date in unix time (inclusive)
+        function fetch_code_frequency_between_dates(dataset, start_inclusive, end_inclusive){
+        	var start_unixtime = start_inclusive.getUnixTime();
+        	var end_unixtime = end_inclusive.getUnixTime();
+        	return dataset.filter(function(data){
+        		//console.log(moment.unix(data[0]).format('YYYY-MM-DD'));
+        		return data[0] >= start_unixtime && data[0] <= end_unixtime;
+        	});
+        }
+
+        function group_code_frequency_by_month(dataset){
+        	var assoc_array = dataset.reduce(function (prev, data) { 
+        		var monthly = moment.unix(data[0]).format('MMMM YYYY');
+
+			  	if ( monthly in prev ) {
+			  		prev[monthly][0] += data[1]; 
+			  		prev[monthly][1] += data[2];
+			  	}else{
+			  		prev[monthly] = [data[1], data[2]]; 
+			  	}
+
+			  	return prev; 
+			}, {} );
+
+			var numeric_array = [];
+			for(var key in assoc_array){
+				numeric_array.push([key, assoc_array[key][0], assoc_array[key][1]]);
+			}
+
+			//console.log(numeric_array);
+
+			return numeric_array;
+        }
+
+        function pyramid_chart(dataset){
+        	var width = 1000;
+        	var height = 500;
+        	var margin = 25;
+        	var bar_size = Math.min(50, height/dataset.length);
+        	var label_margin = 75;
+        	var label_padding = 15;
+        	var min_domain = d3.min(dataset, function(data){
+        		return Math.min(data[1], Math.abs(data[2]));
+        	});
+        	var max_domain = d3.max(dataset, function(data){
+        		return Math.max(data[1], Math.abs(data[2]));
+        	});
+
+			//console.log(min_domain);
+        	//console.log(max_domain);
+
+
+        	var x_addition = d3.scale.linear()
+        		.domain([min_domain, max_domain])
+        		.range([0, width/2-label_margin*2]);
+
+        	var y_addition = d3.scale.linear()
+        		.domain([0, dataset.length])
+        		.range([0, height-margin]);
+
+    		var x_deletion = d3.scale.linear()
+    			.domain([min_domain, max_domain])
+    			.range([0, width/2-label_margin*2]);
+
+        	var y_deletion = d3.scale.linear()
+        		.domain([0, dataset.length])
+        		.range([0, height-margin]);
+
+        	var chart = d3.select('#d3-part-two')
+        		.append('svg')
+    			.attr('width', width)
+    			.attr('height', height);
+
+    		var addition_bars = chart.selectAll('rect.addition')
+    			.data(dataset)
+    			.enter()
+    			.append('rect')
+    			.attr('class', 'addition')
+    			.attr('stroke', 'green')
+    			.attr('stroke-width', 1)
+    			.attr('fill', 'green')
+    			.attr('fill-opacity', 0.5)
+    			.attr('x', width/2+label_margin)
+    			.attr('y', 5)
+    			.attr('width', function(data){
+    				return x_addition(data[1]);
+    			})
+    			.attr('height', bar_size)
+    			.attr('transform', function(data, index){
+    				return "translate(0,"+y_addition(index)+")";
+    			});
+
+    		var deletion_bars = chart.selectAll('rect.deletion')
+    			.data(dataset)
+    			.enter()
+    			.append('rect')
+    			.attr('class', 'deletion')
+    			.attr('stroke', 'maroon')
+    			.attr('stroke-width', 1)
+    			.attr('fill', 'maroon')
+    			.attr('fill-opacity', 0.5)
+    			.attr('x', -label_margin)
+    			.attr('y', 5)
+    			.attr('width', function(data){
+    				return x_deletion(Math.abs(data[2]));
+    			})
+    			.attr('height', bar_size)
+    			.attr('transform', function(data, index){
+    				return "translate("+((width/2)-x_deletion(Math.abs(data[2])))+","+y_deletion(index)+")";
+    			});
+
+    		var shared_labels = chart.selectAll('text.shared_label')
+    			.data(dataset)
+    			.enter()
+    			.append('text')
+    			.attr('class', 'shared_label')
+    			.attr('font-family', 'monospace')
+    			.attr('x', width/2)
+    			.attr('y', 30)
+    			.attr('text-anchor', 'middle')
+    			.text(function(data){
+    				return data[0];
+    			})
+    			.attr('transform', function(data, index){
+    				return "translate(0,"+y_addition(index)+")";
+    			});
+
+    		var addition_labels = chart.selectAll('text.addition_label')
+    			.data(dataset)
+    			.enter()
+    			.append('text')
+    			.attr('class', 'addition_label')
+    			.attr('font-family', 'monospace')
+    			.attr('fill', 'green')
+    			.attr('x', function(data){
+    				return width/2+label_margin + label_padding + x_addition(data[1]);
+    			})
+    			.attr('y', 30)
+    			.text(function(data){
+    				return data[1];
+    			})
+    			.attr('transform', function(data, index){
+    				return "translate(0,"+y_addition(index)+")";
+    			});
+
+    		var deletion_labels = chart.selectAll('text.deletion_label')
+    			.data(dataset)
+    			.enter()
+    			.append('text')
+    			.attr('class', 'deletion_label')
+    			.attr('font-family', 'monospace')
+    			.attr('fill', 'maroon')
+    			.attr('x', 0)
+    			.attr('y', 30)
+    			.text(function(data){
+    				return data[2];
+    			})
+    			.attr('transform', function(data, index){
+    				return "translate("+((width/2)-x_deletion(Math.abs(data[2]))-label_margin*2+20)+","+y_deletion(index)+")";
+    			});
+    			
+        }
+    </script>
+
+</head>
+<body>
+	<div class="row">
+	    <div class="medium-12 columns">
+	        <h1>d3.js Visualization
+	            <small>CS3219: Assignment 4</small>
+	        </h1>
+	    </div>
+	</div>
+
+	<div class="row">
+	    <div class="medium-12 columns">
+	        <h3>#2 Sum of Addition &amp; Deletion</h3>
+
+	        <p>Visualize the sums of additions by all authors and sums of deletions by all authors, for
+	            each month from Jan 2016 to June 2016.</p>
+	    </div>
+	</div>
+
+	<div class="row">
+	    <div class="medium-12 columns">
+	        <div id="d3-part-two"></div>
+	        <h6>Data from <a href='https://api.github.com/repos/tungnk1993/scrapy/stats/code_frequency'>https://api.github.com/repos/tungnk1993/scrapy/stats/code_frequency</a>.</h6>
+	        <p><small>Click to view &amp; expand raw json data:</small></p>
+	        <div id="d3-part-two-json"></div>
+	    </div>
+	</div>
+</body>
+</html>
