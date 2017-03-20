@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>CS3219: Assignment 4</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <style>
+
+    .axis {
+       shape-rendering: crispEdges;
+    }
+     
+    .x.axis line, .x.axis path {
+        fill: none;
+        stroke: #000000;
+        stroke-width: 1.0;
+    }
+       
+    .y.axis line, .y.axis path {
+       fill: none;
+       stroke: #000000;
+       stroke-width: 1.0;
+    }
+    </style>`
+
+    <script type="text/javascript">
+    /*echo -e 'day\tname\thash\tmessage' > part-three.tsv; git log --format="%cd%x09%cN%x09%h%x09%s" --date="format: %d" --since="2016-01-01" --until="2016-01-31" >> part-three.tsv*/
+
+        var name_list;
+
+        $(document).ready(function(){
+        	d3.tsv('part-three.tsv', function(tsv){
+                name_list = get_name_list(tsv);
+
+                contributors_a_m = get_contributors_where_name_between(tsv, 'A', 'M');
+                contributors_n_z = get_contributors_where_name_between(tsv, 'N', 'Z');
+
+                console.log(contributors_a_m);
+                console.log(contributors_n_z);
+
+                commits_count_a_m = count_commits_for_each_day(contributors_a_m);
+
+                commits_count_n_z = count_commits_for_each_day(contributors_n_z);
+
+                console.log(commits_count_a_m);
+                console.log(commits_count_n_z);
+
+                var dataset = [];
+
+                dataset.push(commits_count_a_m);
+                dataset.push(commits_count_n_z);
+
+                console.log(dataset);
+
+                var m = 4;
+                var n = 20;
+
+                var data = d3.range(m).map(function() { return d3.range(n).map(Math.random); });
+
+                console.log(data);
+/*
+                tsv2 = d3.nest()
+                    .key(function(data){
+                        return parseInt(data.day);
+                    })
+                    .key(function(data){
+                        return data.name;
+                    })
+                    .entries(tsv);*/
+                //tsv = group_by_days(tsv);
+                
+                //tsv = tsv.map(group_by_names);
+
+                //tsv = tsv.filter(function(n){ return n != undefined });
+
+                generate_chart(dataset);
+            });
+        });
+
+        function count_commits_for_each_day(dataset){
+            var emptyArray = Array.apply(null, Array(31)).map(function(){return 0;});
+            var result = dataset.reduce(function(prev, data){
+                var day = parseInt(data.day);
+
+                prev[day] += 1;
+
+                return prev;
+            }, emptyArray);
+
+            return result;
+        }
+
+        function get_contributors_where_name_between(dataset, start_letter, end_letter){
+            return dataset.filter(function(data){
+                return data.name.charAt(0).toUpperCase() >= start_letter &&
+                    data.name.charAt(0).toUpperCase() <= end_letter;
+            });
+        }
+
+        function generate_chart(dataset){
+            
+            var n = 31, // number of samples
+                m = 2; // number of series
+
+            var margin = {top: 20, right: 30, bottom: 30, left: 40},
+                width = 1000 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom;
+
+            var y = d3.scale.linear()
+                .domain([0, 30])
+                .range([height, 0]);
+
+            var x0 = d3.scale.ordinal()
+                .domain(d3.range(n))
+                .rangeBands([0, width], .5);
+
+            var x1 = d3.scale.ordinal()
+                .domain(d3.range(m))
+                .rangeBands([0, x0.rangeBand()]);
+
+            var z = d3.scale.ordinal()
+                .range(["#8A9B0F","#F8CA00"]);
+
+            var xAxis = d3.svg.axis()
+                .scale(x0)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+            var svg = d3.select("#d3-part-three")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("svg:g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .selectAll('text')
+                .attr('font-family', 'monospace');;
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .style({'stroke-width': '1px'})
+                .call(xAxis)
+                .selectAll('text')
+                .attr('font-family', 'monospace');
+
+            svg.append("g").selectAll("g")
+                .data(dataset)
+                .enter().append("g")
+                .style("fill", function(d, i) { return z(i); })
+                .attr("transform", function(d, i) { return "translate(" + x1(i) + ",0)"; })
+                .selectAll("rect")
+                .data(function(d) { return d; })
+                .enter().append("rect")
+                .attr("y", height)
+                .attr("height", 0)
+                .transition()
+                .delay(function (d, i) { return i*100; })
+                .attr("width", x1.rangeBand())
+                .attr("height", function(data){
+                    return y(0)-y(data);
+                })
+                .attr("x", function(d, i) { return x0(i); })
+                .attr("y", function(d) { return y(d); });
+
+            svg.selectAll('g rect')
+                .on("mouseover", function() { tooltip.style("display", null); })
+                .on("mouseout", function() { tooltip.style("display", "none"); })
+                .on("mousemove", function(d, i) {
+                    var xPosition = d3.mouse(this)[0] - 15;
+                    var yPosition = d3.mouse(this)[1] - 60;
+
+                    var group = i>31? 'N-Z': 'A-M';
+
+                    tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+
+                    tooltip.select("text")
+                        .text(group+" commited "+d);
+                });
+
+            var tooltip = svg.append("g")
+              .attr("class", "tooltip")
+              .style("display", "none");
+                
+            tooltip.append("rect")
+              .attr("width", 120)
+              .attr("height", 20)
+              .attr("fill", "black")
+              .style("opacity", 0.8);
+
+            tooltip.append("text")
+              .attr("x", 60)
+              .attr("dy", "1.2em")
+              .style("text-anchor", "middle")
+              .attr('fill', "white")
+              .attr("font-size", "12px")
+              .attr("font-weight", "bold");
+
+            var legend_text = ['A-M', 'N-Z'];
+
+            var legend = svg.selectAll('.legend')
+                .data(z.domain())
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', function(d, i){
+                    return 'translate('+50+','+(30*i)+')';
+                });
+
+            legend.append('rect')
+                .attr('width', 25)
+                .attr('height', 25)
+                .style('fill', z);
+
+            legend.append('text')
+                .attr('x', 30)
+                .attr('y', 20)
+                .attr('font-family', 'monosapce')
+                .attr('font-size', '12px')
+                .text(function(data){
+                    return legend_text[data];
+                });
+        }
+
+        function get_name_list(dataset){
+            var result = dataset.reduce(function(prev, data){
+                var name = data.name;
+
+                if($.inArray(name, prev) == -1){
+                    prev.push(name);
+                }
+
+                return prev;
+            }, []);
+
+            return result;
+        }
+
+        function group_by_days(dataset){
+            var result = dataset.reduce(function(prev, data){
+                var day = parseInt(data.day);
+
+                if(prev[day]){ // if prev[day] has data
+                    // push hash,message,name
+                    prev[day].push({
+                        'hash': data.hash,
+                        'message': data.message,
+                        'name': data.name,
+                        'day': data.day
+                    });
+                }else{ // if prev[day] is undefined
+                    prev[day] = [{
+                        'hash': data.hash,
+                        'message': data.message,
+                        'name': data.name,
+                        'day': data.day
+                    }];
+                }
+
+                return prev;
+            }, []);
+
+            return result;
+        }
+
+        function group_by_names(dataset){
+            var result = dataset.reduce(function(prev, data){
+                var name = data.name;
+                var day = parseInt(data.day);
+
+                if(prev[name]){
+                    prev[name].push({
+                        'hash': data.hash,
+                        'message': data.message,
+                    });
+                }else{
+                    prev[name] = [{
+                        'hash': data.hash,
+                        'message': data.message,
+                    }];
+                    // because javascript hashmap (assoc array) doesn't keep track of the # of pairs, we have to do it outselves...
+                    prev['length'] += 1;
+                    prev['day'] = day;
+                }
+
+                return prev;
+            }, []);
+
+            return result;
+        }
+    </script>
+
+</head>
+<body>
+	<div class="row">
+	    <div class="medium-12 columns">
+	        <h1>d3.js Visualization
+	            <small>CS3219: Assignment 4</small>
+	        </h1>
+	    </div>
+	</div>
+
+	<div class="row">
+	    <div class="medium-12 columns">
+	        <h3>#3 Hardworking AM &amp; NZ</h3>
+
+	        <p>Some say that programmers whose names start with A-M are more hardworking than those starting with N-Z. Visualize the sum of commits by the two groups of programmers for each day during Jan 2016</p>
+	    </div>
+	</div>
+
+	<div class="row">
+	    <div class="medium-12 columns">
+	        <div id="d3-part-three"></div>
+	    </div>
+	</div>
+</body>
+</html>

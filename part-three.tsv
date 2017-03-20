@@ -1,0 +1,229 @@
+day	name	hash	message
+ 30	Valdir Stumm Jr	bb2cf7c0	Fixed bug on XMLItemExporter with non-string fields in items
+ 30	Mikhail Korobov	f9dc02e2	PY3 fix downloader slots GC
+ 29	Paul Tremberth	d843a0aa	Amend "settings" command to output JSON for dict settings
+ 29	Paul Tremberth	aa78758b	Update tests for settings copy_to_dict()
+ 29	Paul Tremberth	a1ebff83	Remove __str__ and __repr__ from settings, introduce copy_to_dict() instead
+ 29	Mikhail Korobov	a35aec71	Merge pull request #1710 from redapple/1550-shell_file-cont
+ 29	Paul Tremberth	78f00401	Remove unused import in tests
+ 29	Mikhail Korobov	505e8725	Merge pull request #1742 from stummjr/add-tests-to-exporters
+ 28	stummjr	cf2ebb06	Include tests for exporters: JSON, JSON-Lines, Pickle and Marshal.
+ 28	Paul Tremberth	e9f6b988	Amend guess_scheme() docstring
+ 28	Paul Tremberth	c6f374f2	Merge remote-tracking branch 'origin/master' into 1550-shell_file-cont
+ 28	Paul Tremberth	481e2517	Move guess_scheme() tests to relevant test module
+ 28	Paul Tremberth	cae26840	Move guess_scheme() to scrapy.utils.url
+ 27	Artur Gaspar	90e3ae1c	Do not forget failed requests in robots.txt middleware.
+ 28	Mikhail Korobov	4c9a6ef3	Merge pull request #1740 from scrapy/response-text-micro-optimize
+ 28	Mikhail Korobov	3e080c3c	call .text from .body_as_unicode() and not the other way around
+ 28	Mikhail Korobov	394b991e	Merge pull request #1737 from stummjr/fix-py3-exporters-multiple-types
+ 27	stummjr	27758f60	Changes fallback for CSVItemExporter, avoiding to call to_native_str(str()).
+ 27	Paul Tremberth	27fb200e	Merge pull request #1727 from redapple/priority-adjust
+ 27	stummjr	c55ff110	Fix CSV exporter for non string Python types.
+ 27	stummjr	f1d971a5	fix PythonItemExporter for non-string types
+ 27	Artur Gaspar	b2beb3e8	Fix handling of already failed deferreds when downloading page in robots.txt middleware.
+ 27	Artur Gaspar	dc8701ea	Add test for already failed deferreds when downloading page in robots.txt middleware.
+ 27	Mikhail Korobov	7d24df37	Merge pull request #1681 from redapple/code-of-conduct
+ 27	Mikhail Korobov	7ca9ae19	DOC typo fix
+ 27	Elias Dorneles	77951095	Merge pull request #1730 from scrapy/response-text
+ 27	Paul Tremberth	e0f48c48	Add link to CoC mardown file on Github
+ 27	Paul Tremberth	d999e3f7	More explicit description of DEPTH_PRIORITY
+ 27	Paul Tremberth	6ed08d23	Add note for DEPTH_PRIORITY
+ 27	Mikhail Korobov	4bcbb77b	response.text. Fixes GH-1729.
+ 26	Paul Tremberth	1c831088	Clarify priority adjust settings docs
+ 26	Daniel Graña	85f0596c	Merge pull request #1725 from redapple/spiderstate-notconfigured
+ 26	Mikhail Korobov	6660175d	Merge pull request #1726 from redapple/mwlist-logging-long
+ 26	Paul Tremberth	bb1f4013	Rewrite warning about shell with local files as note
+ 26	Paul Tremberth	c22a4e3b	Use long classes names for enabled middlewares in startup logs
+ 26	Paul Tremberth	29695375	Add test for raised exception with SpiderState extension when no JOBDIR used
+ 26	Paul Tremberth	0349bbf9	Disable SpiderState extension if no JOBDIR set
+ 26	Paul Tremberth	0d368c5d	Merge pull request #1724 from scrapy/robotstxt-default
+ 26	Mikhail Korobov	f30758c2	Enable robots.txt handling by default for new projects. Fixes GH-1668.
+ 26	Elias Dorneles	2246280b	Merge pull request #1723 from redapple/closespider-notconfigured
+ 26	Paul Tremberth	52daa1b9	Merge pull request #1720 from scrapy/deprecations
+ 26	Mikhail Korobov	1e485745	Merge pull request #1722 from redapple/mwlist-logging
+ 26	Paul Tremberth	6ee8d865	Disable CloseSpider extension if no CLOSPIDER_* setting set
+ 26	Paul Tremberth	7608da88	Fix logging of enabled middlewares
+ 26	Elias Dorneles	de22b6f3	Merge pull request #1721 from Digenis/offsitemw_subdomains
+ 26	Νικόλαος-Διγενής Καραγιάννης	1cffa99e	tests+doc for subdomains in offsite middleware
+ 26	Paul Tremberth	713e1eee	Update docs about local files support for "scrapy shell"
+ 26	Mikhail Korobov	9c2aa50e	deprecate unused and untested scrapy.utils.datatypes.MultiValueDict
+ 26	Mikhail Korobov	7070dae4	deprecate unused and untested scrapy.utils.datatypes.SiteNode
+ 26	Daniel Graña	a7b86137	Merge pull request #1499 from scrapy/py3-port-exporters
+ 26	Daniel Graña	d0eacfe0	Add test case for marshal item exporter
+ 25	Elias Dorneles	2dfdde3c	fallback to repr when can't convert to native string
+ 25	Elias Dorneles	23b3336c	add test for invalid option
+ 25	Daniel Graña	b2046318	Merge pull request #1716 from lopuhin/py3-test-pipeline-files-images
+ 25	Paul Tremberth	fb8ab242	Move urlparsing statement in add_http_if_no_scheme()
+ 24	Elias Dorneles	0c44fac2	added tests for feed export marshal and pickle
+ 24	Elias Dorneles	4fef2c76	Merge pull request #1717 from lopuhin/py3-test-spidermiddleware-httperror
+ 24	Konstantin Lopuhin	1be90323	py3: properly skip s3 tests on py3
+ 24	Konstantin Lopuhin	4233b3cd	py3: reviewed passing test_spidermiddleware_httperror.py
+ 24	Konstantin Lopuhin	097082cf	reviewed py3 compat in pipelines/images.py and pipelines/files.py
+ 24	Konstantin Lopuhin	333d4c91	py3: add boto to py3 test requirements, test_pipeline_files and test_pipeline_images passing now
+ 24	Mikhail Korobov	85ae2732	Merge pull request #1715 from lopuhin/py3-test-mail
+ 24	Konstantin Lopuhin	860353b0	py3: unskip test_mail and scrapy/mail.py
+ 24	Konstantin Lopuhin	9704226e	py3: fix test_mail - get_payload returns bytes when decode is True
+ 23	Elias Dorneles	9fbe6f3e	added feedexport test for xml output
+ 23	Elias Dorneles	935b1da8	uses ScrapyDeprecationWarning instead of silenced PendingDeprecationWarning
+ 23	Elias Dorneles	c75f1fe4	restore bytes instead of text, for easier reviewing
+ 22	Paul Tremberth	5f09da60	Revert "Use pytest.mark.parametrize decorator"
+ 22	Paul Tremberth	1a30a777	Use pytest.mark.parametrize decorator
+ 22	Paul Tremberth	61ca8d58	Merge remote-tracking branch 'origin/master' into 1550-shell_file-cont
+ 22	Paul Tremberth	7a51d370	Regex-based guess_scheme() + refactor tests
+ 22	Paul Tremberth	60052b3c	Remove unused re import
+ 22	Paul Tremberth	be239f33	Remove unused import
+ 22	Elias Dorneles	d0955fd0	add back test for latin-1 encoding
+ 22	Paul Tremberth	6d73e057	Extract guess_scheme function and refactor tests
+ 22	Mikhail Korobov	c75f7ed2	Merge pull request #1711 from scrapy/py3-parse-command-tests
+ 22	Mikhail Korobov	35ada107	PY3 enable tests for scrapy parse command
+ 21	Elias Dorneles	e9387529	add test for PythonItemExporter binary mode
+ 21	Elias Dorneles	25149732	re-enable skipped feed export tests
+ 21	Elias Dorneles	b746d85f	PY3 port csv exporter
+ 21	Paul Tremberth	8bd5b608	Remove relpath filepath
+ 21	Paul Tremberth	240ecbf3	Add local file tests for scrapy shell command
+ 21	Elias Dorneles	9f35c286	fix indentation
+ 21	Elias Dorneles	fed7c8b4	fix: use is_listlike
+ 21	Elias Dorneles	c76190d4	PY3: ported json(lines), xml exporters
+ 21	Elias Dorneles	b6ef1f19	make BaseItemExporter export unicode, pushed down previous behavior for classes that need it
+ 21	Elias Dorneles	a76ecd4e	remove test_exporters from py3 ignores
+ 21	Paul Tremberth	1406cab1	Merge remote-tracking branch 'origin/master' into 1550-shell_file
+ 21	Elias Dorneles	e0074d7f	Merge pull request #1692 from lopuhin/py3-test-crawl
+ 21	Konstantin Lopuhin	5813de88	py3: unskip test_closespider - it passes after fixing mockserver.Follow resouce on py3
+ 21	Konstantin Lopuhin	4607f284	py3: unskip test_crawl
+ 21	Konstantin Lopuhin	bf5f54fa	py3: fix getarg
+ 21	Konstantin Lopuhin	ad2b3321	py3 compat: use range, fixes CrawlTestCase.test_start_requests_bug_yielding
+ 21	Konstantin Lopuhin	0680950b	py3: pass CrawlTestCase.test_referer_header, fixing Echo resource in mockserver and json decoding in test
+ 21	Konstantin Lopuhin	20b839b4	py3: pass first crawl test (test_follow_all): fix mock server
+ 21	Daniel Graña	0f500a1f	Merge pull request #1708 from scrapy/fix-scrapy-bench
+ 21	Daniel Graña	5346011e	Merge pull request #1637 from eLRuLL/py3-httpproxy-retry
+ 21	Raul Gallegos	a06a5f00	adding configurable encoding for httpproxy authentication
+ 21	Raul Gallegos	f042ad0f	py3 fix HttpProxy and Retry Middlewares
+ 21	Paul Tremberth	c9e046d1	Merge pull request #1657 from palego/os.mknod-fails-on-macos
+ 21	Mikhail Korobov	a18dc244	correctly process arguments for bench server
+ 21	Mikhail Korobov	80c55f19	PY3 fixed scrapy bench command
+ 21	Mikhail Korobov	e44ce863	Merge pull request #1706 from scrapy/fix-form-request-formcss-version
+ 21	Elias Dorneles	d4c4ca80	fix version number to appear new feature
+ 21	Paul Tremberth	da83f2dc	Merge pull request #1693 from lopuhin/py3-commands-fetch-shell
+ 21	Paul Tremberth	6d8620ff	Merge pull request #1691 from lopuhin/py3-test-engine
+ 21	Elias Dorneles	a6e5c848	Merge pull request #1382 from barraponto/formcss
+ 21	Capi Etheriel	659715ec	implements FormRequest.from_response CSS support
+ 20	Konstantin Lopuhin	fd24e224	use byte constants for prefix instead of encoding it
+ 20	Konstantin Lopuhin	a5da7531	py3 backout skipping test_closespider - it was fixed on another branch
+ 20	Konstantin Lopuhin	c6d013ec	py3 fetch command: it may actually be better to try to print bytes as-is
+ 20	Konstantin Lopuhin	47d3c633	py3: port fetch and shell commands, and review + enable already passing test_closespider.py and tests/test_utils_template.py
+ 20	Konstantin Lopuhin	c1db6018	py3: unskip passing test_engine
+ 20	Konstantin Lopuhin	0b08b4bf	fix engine tests - this callback (spider_closed_callback) should accept one argument, but the error was hidden on py2
+ 20	Konstantin Lopuhin	a32b59ac	py3: fix EngineTest.test_crawler
+ 20	Daniel Graña	56b69d2e	Merge pull request #1689 from scrapy/remove-lsprof
+ 20	Elias Dorneles	8fb9a6f8	Merge pull request #1674 from redapple/tox-py35
+ 20	Elias Dorneles	8a1255d3	Merge pull request #1680 from lopuhin/py3-downloader-middleware
+ 20	Elias Dorneles	b8497513	Merge pull request #1701 from lopuhin/cleanup-http11-tunneling
+ 20	Paul Tremberth	29ff84a7	Invert PY2/PY3 test for conditional read1() definition
+ 20	Konstantin Lopuhin	f0cf5463	cleanup http11 tunneling connection after #1678 - construct string and then convert to bytes
+ 19	Elias Dorneles	ef520541	Merge pull request #1699 from scrapy/no-optional-features
+ 19	Daniel Graña	176610f9	optional_features has been removed
+ 19	Daniel Graña	5ec43198	Merge pull request #1358 from nyov/nyov/boto-anon-connection
+ 19	Daniel Graña	b1e44436	Merge pull request #1642 from orangain/doc-metarefresh
+ 19	Daniel Graña	d59d3f1e	Merge pull request #1694 from lopuhin/py3-twisted-version
+ 19	Elias Dorneles	e8b26e2a	Merge pull request #1698 from carlosp420/typo-you
+ 19	carlosp420	e15f361b	fixed typo You -> you
+ 19	Elias Dorneles	b4fb9d35	Merge pull request #1678 from lopuhin/py3-http-downloaders
+ 19	Paul Tremberth	2b524583	Remove unused import statement
+ 19	Paul Tremberth	1f223383	Use if Py2/Py3 function instead of custom GzipFile class method
+ 19	Konstantin Lopuhin	4c841728	move leveldb to tests/requirements-py3.txt
+ 19	Konstantin Lopuhin	076ef553	Merge branch 'master' into py3-http-downloaders
+ 19	Konstantin Lopuhin	07577c43	Merge branch 'master' into py3-http-downloaders
+ 19	Konstantin Lopuhin	9c3117a9	more pythonic check of noconnect in proxy params
+ 19	Konstantin Lopuhin	bb50c0be	remove unused import
+ 19	Nicolás Alejandro Ramírez Quiros	6827eab2	Merge pull request #1654 from aron-bordin/show_maxdownsize_warn_once
+ 19	Konstantin Lopuhin	5ac54ed3	raise minimal twisted version for py3
+ 19	Daniel Graña	49fe631d	Merge pull request #1676 from lopuhin/py3-webclient
+ 19	Mikhail Korobov	fdc3c9d5	Merge pull request #1624 from side2k/more_verbose_download_cancel
+ 19	Mikhail Korobov	ff235fa1	Remove --lsprof command-line option. Fixes GH-1531
+ 18	Paul Tremberth	fd99ef86	Test for AttributeError when pickling objects (Python>=3.5)
+ 18	Konstantin Lopuhin	de98d8d0	move comment about test skipped on py3 into a proper place
+ 18	Konstantin Lopuhin	7ffcc587	Merge branch 'py3-http-downloaders' into py3-downloader-middleware
+ 18	Konstantin Lopuhin	7fdd3225	fix test skipping logic - this is (temporary) py2-only part
+ 18	Konstantin Lopuhin	120fb4ad	revert bogus change
+ 18	Paul Tremberth	bcbad290	Stick with ValueError for queue/serialization exception tests
+ 18	Konstantin Lopuhin	324f2c1a	common test_downloadermiddleware.py also passes now due to fixes in compression middleware
+ 18	Konstantin Lopuhin	0b933641	py3: port compression downloader middleware and tests
+ 18	Konstantin Lopuhin	6edd4dec	Merge branch 'py3-http-downloaders' into py3-downloader-middleware
+ 18	Konstantin Lopuhin	f876654a	Merge branch 'py3-webclient' into py3-http-downloaders
+ 18	Konstantin Lopuhin	49464345	revert most changes to this test, and clarify - it is valid only on py2, because urls are strictly unicode on py3
+ 18	Konstantin Lopuhin	a2efd389	clarify: rename r_transform to response_transform
+ 18	Konstantin Lopuhin	b940606b	this is a test for TunnelingTCP4ClientEndpoint - move into Http11ProxyTestCase
+ 18	Elias Dorneles	bc1f5353	Merge pull request #1671 from redapple/xmliter-unicode
+ 18	Konstantin Lopuhin	7af64e8f	py3: remove extra encoding/decoding of url: pass it as bytes only when required
+ 18	Mikhail Korobov	66f41aba	Merge pull request #1687 from palego/extra-space
+ 18	Konstantin Lopuhin	0f527849	https proxy tunneling - add a test (not perfect, but covers all impl) and fix for py3
+ 18	Konstantin Lopuhin	98c060d0	py3: fix http 1.1 test with https, and use self.host everywhere
+ 18	Konstantin Lopuhin	04f69fd1	add https 1.1 downloader test - localhost is a valid DNS-ID
+ 18	Konstantin Lopuhin	f403c880	Merge branch 'py3-webclient' into py3-http-downloaders
+ 18	Konstantin Lopuhin	f2e2ff5e	py3: webclient assumes that urls come from Request.url and are ascii-only
+ 18	palego	6b905a9a	split-up the assertIn
+ 18	Konstantin Lopuhin	673df5e4	add webclient test - check that non-standart body encoding matches Content-Encoding header
+ 18	Konstantin Lopuhin	d3c2b0cf	py3 webclient: I was mistaken about unicode body, revert conversion to bytes and fix HEAD response
+ 18	Mikhail Korobov	9ef25d7b	Merge pull request #1686 from cclauss/patch-1
+ 18	cclauss	cd735e37	Simplify if statement
+ 15	Paul Tremberth	4e447666	Use "unicode" string for lxml.etree.tostring() serialization
+ 15	Elias Dorneles	3f1f15bc	Merge pull request #1683 from rgtk/patch-2
+ 15	Ralph Gutkowski	79147a61	Update stats.rst
+ 15	Ralph Gutkowski	bb38400d	Update Stats Collection documentation
+ 15	Paul Tremberth	73d78ec9	Add Code of Conduct Version 1.3.0 from http://contributor-covenant.org/
+ 15	Paul Tremberth	ee4fadc0	Use .read1() if available when using GzipFile
+ 15	Konstantin Lopuhin	7d44c5dc	py3: unskip tests/test_downloadermiddleware_httpcache.py and scrapy/downloadermiddlewares/httpcache.py
+ 15	Konstantin Lopuhin	085fdd62	py3 fix for ignoring cache controls - map is not a list
+ 15	Konstantin Lopuhin	b0648271	py3 fix for rfc1123_to_epoch - "except Exception" was hiding bytes/str error
+ 15	Konstantin Lopuhin	8330776c	fix error reporting in test: we can fail in process_request too, so result should always be defined
+ 15	Konstantin Lopuhin	4398d95a	skip this file on py3 again - it has one compression test, sould be done separately
+ 15	Konstantin Lopuhin	ae6758ee	Merge branch 'py3-http-downloaders' into py3-downloader-middleware
+ 15	Konstantin Lopuhin	a4ca1668	add https test for http10 handler (no luck with testing https with http11 so far)
+ 15	Konstantin Lopuhin	96fcf4ce	add a check that byte url is not accepted in http.Response on py3
+ 15	Paul Tremberth	131f4632	Allow failures for Python 3.5 for now
+ 15	Konstantin Lopuhin	87849780	some py3 fixes for RFC2616Policy
+ 15	Konstantin Lopuhin	ea0471e3	py3: fix LeveldbCacheStorage - using bytes as keys and values in leveldb
+ 15	Konstantin Lopuhin	ddc91dda	py3: fix _BaseTest in httpcache
+ 15	Konstantin Lopuhin	e7ed1fd7	py3 compat in httpcache - headers are bytes
+ 15	Konstantin Lopuhin	dbf6cc73	py3: add leveldb to py33 test env, fix anydbm module name on py3
+ 15	Konstantin Lopuhin	94ab7bee	py3: body to bytes in tests, unskip test file
+ 14	Konstantin Lopuhin	99f1f2ad	unskip tests and modules ported to py3
+ 14	Konstantin Lopuhin	81a90c3a	unskip part of test_download_gzip_response on py3, file a twisted issue for the remaining part
+ 14	Konstantin Lopuhin	2aa6c92f	py3 fixes in tests.mockserver
+ 14	Konstantin Lopuhin	f46a9d59	skip ftp tests on py3 for now
+ 14	Konstantin Lopuhin	4950f598	py3: pass http proxy tests
+ 14	Konstantin Lopuhin	c6f14a39	py3: fix http10 downloader - unicode host expected here
+ 14	Konstantin Lopuhin	6b79fffa	py3: pass all of HttpTestCase
+ 14	Konstantin Lopuhin	3509378b	py3: pass first http downloader test, simple crawler works now, yay!
+ 14	Konstantin Lopuhin	32bb5b68	fix import of test_downloader_handlers.py: use @implementer, move failing on py3 imports into corresponding tests
+ 14	Konstantin Lopuhin	5c2241cc	py3: fix webclient tests after making ScrapyHTTPClientFactory use bytes as in twisted
+ 14	Konstantin Lopuhin	8df35bca	rm note to self: to be discussed in PR
+ 14	Konstantin Lopuhin	ac2cf191	py3: remove comments, utf-8 is fine here: as twisted ultimately uses urllib.parse.quote that assepts bytes and assumes utf-8
+ 14	Konstantin Lopuhin	e5fb6094	make ScrapyHTTPClientFactory comply to twisted HTTPClientFactory protocol - use bytes (encoding are likely wrong at this stage)
+ 14	Konstantin Lopuhin	6a412d25	all tests pass in test_webclient.py on py3 - removing from py3-ignores
+ 14	Konstantin Lopuhin	01783561	py3 fix testRedirect: url is bytes here
+ 14	Konstantin Lopuhin	30c7b4e4	py3 compat in test_timeoutTriggering cleanup
+ 14	Konstantin Lopuhin	88f55312	py3 fix in testFactoryInfo - factory attirbutes are bytes in twisted
+ 14	Konstantin Lopuhin	b5f9bc84	py3 test fixes in test_webclient - expect bytes as page body
+ 14	Konstantin Lopuhin	ae4aa2c3	py3 test fix: putChild expects bytes as path
+ 14	Paul Tremberth	85b0e6c9	Travis: run tox with Python 3.5 + add Python 3.5 tests
+ 14	Konstantin Lopuhin	325b6af6	fix ScrapyHTTPPageGetterTests for py3 - we expect bytes here
+ 14	Konstantin Lopuhin	945674eb	pass test_externalUnicodeInterference - the logic for py3 is clearly inverse of what was expected in this test, as scrapy Request url must be unicode
+ 14	Konstantin Lopuhin	1d5ab671	pass test_getPageHead on py3
+ 14	Konstantin Lopuhin	73ff87c1	decode body from utf-8, as scrapy stores body as bytes, and twisted has already converted  to unicode
+ 14	Konstantin Lopuhin	9f2be23a	webclient tests, py3: fix setUp, pass test_getPage
+ 14	Konstantin Lopuhin	f3889b0b	py3 compat: encode delimiter, method and path in ScrapyHTTPPageGetter
+ 13	Paul Tremberth	a93d49a6	Add Python 3.5 tox env and Python 3.4 tests in Travis CI
+ 13	Paul Tremberth	1347015a	Refactored test code
+ 13	Paul Tremberth	d4c7d72b	Add tests for input type in xmliter calls
+ 13	Elias Dorneles	57f99fc3	Merge pull request #1644 from yarikoptic/master
+ 13	Paul Tremberth	9fad25f3	Use explicit Unicode and bytes for XML body in tests
+ 13	Paul Tremberth	2f2c2e80	Merge remote-tracking branch 'origin/master' into xmliter-unicode
+ 13	Mikhail Korobov	f01fd076	Merge pull request #1661 from redapple/py3-iterators
+ 12	Paul Tremberth	d7d4ef67	Changes following comments
+ 12	Paul Tremberth	6ddd8147	Support unicode tags in xml iterators (fixes #1665)
+ 07	Paul Tremberth	d4872940	PY3: port utils/iterators
+ 06	Elias Dorneles	95e8ff8b	Merge pull request #1660 from stummjr/patch-4
+ 06	Valdir Stumm Jr	2abc9bc9	Update deprecated examples
+ 04	palego	d03d262f	indentation
+ 03	palego	c702c530	change os.mknod() for open()
